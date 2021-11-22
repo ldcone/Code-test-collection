@@ -1,0 +1,80 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class restart_2667 {
+	static int[][] Map;
+	static boolean[][] check;
+	static int N;
+	static int count;
+	
+	
+	static class position {
+		int x;
+		int y;
+		public position(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
+	
+	static int[] dx = {1,-1,0,0};
+	static int[] dy = {0,0,1,-1};
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(br.readLine());
+		Map = new int[N][N];
+		check = new boolean[N][N];
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		
+		
+		for(int i =0; i< N; ++i) {
+			String input = br.readLine();
+			for(int j=0; j<N; ++j) {
+				Map[i][j] = input.charAt(j)-'0';
+				if(Map[i][j] == 0) {
+					check[i][j] = true;
+				}
+			}
+		}
+		
+		for(int i =0; i<N; ++i) {
+			for(int j =0; j<N; ++j) {
+				if(check[i][j] == true) {
+					continue;
+				}
+				count =0;
+				bfs(i,j);
+				result.add(count);
+			}
+		}
+		Collections.sort(result);
+		System.out.println(result.size());
+		for(int c :result) System.out.println(c);
+	}
+	
+	 static public void bfs(int x, int y) {
+		 check[x][y] = true;
+		 count++;
+		 Queue<position> queue = new LinkedList<>();
+		 queue.add(new position(x,y));
+		 while(!queue.isEmpty()) {
+			position point =  queue.poll();
+			for(int i =0; i<4; ++i) {
+				int cx = point.x + dx[i];
+				int cy = point.y + dy[i];
+				if(cx<0 || cy<0 || cx>=N || cy>=N) {
+					continue;
+				}
+				if(check[cx][cy] == false) bfs(cx,cy);
+				
+			}
+		 }
+	}
+}
