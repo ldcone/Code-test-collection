@@ -3,7 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
+public class triangle {
+	// x,y좌표를 받아줄 클래스 생성 
 	static class position{
 		int x;
 		int y;
@@ -28,7 +29,7 @@ public class Main {
 		int row_max = 0;
 		int col_max = 0;
 		
-		
+		//입력을 받아 맵을 구현한다.
 		for(int i=0; i<10; ++i) {
 			String s = br.readLine();
 			for(int j=0; j<10; ++j) {
@@ -36,6 +37,7 @@ public class Main {
 			}
 		}
 		
+		// 직각이등변 인지 그냥 이등변인지 구별하기 위해  
 		for(int i=0; i<10; ++i) {
 			for(int j=0; j<10; ++j) {
 				if(map[i][j]==1) {
@@ -70,14 +72,15 @@ public class Main {
 		if(row_max == 0 || col_max == 0) {
 			System.out.print(0);
 		}else {
+			// 각 정점의 위치와 그 정점을 기준으로 한 최대 길이를 넘겨준다. 
 			position[] answers= check(row_pos,col_pos,row_max,col_max);
 			for(position pos1 : answers) {
-				if(pos1.x == -1 ) {
+				if(pos1.x == 1 ) {
 					System.out.print(0);
 					break;
 				}
 				System.out.printf("%d %d\n" ,pos1.x + 1, pos1.y + 1);
-				
+				System.out.printf("%d %d\n" ,non.x + 1, non.y + 1);
 			}
 		}
 	
@@ -90,7 +93,11 @@ public class Main {
 		  position second;
 		  position third;
 //		  position[] answer= new position[3];
+		  //만약 가로세로 길이가 같다면 
 		if(row_max == col_max) {
+			//111
+			//110
+			//100
 			
 			if(row_pos.x == col_pos.x && row_pos.y == col_pos.y) {
 				for(int i=0; i<col_max; ++i) {
@@ -108,6 +115,9 @@ public class Main {
 				return answer;
 			}
 			
+			//111
+			//011
+			//001
 			if((row_pos.y + row_max -1) == col_pos.y && row_pos.x == col_pos.x) {
 				for(int i =0; i< col_max; ++i) {
 					for(int j=i; j<row_max; ++j) {
@@ -124,6 +134,9 @@ public class Main {
 				return answer;
 			}
 			
+			//100
+			//110
+			//111
 			if(row_pos.y == col_pos.y && row_pos.x == (col_pos.x + col_max -1)) {
 				for(int i =0; i< col_max; ++i) {
 					for(int j=0; j<i+1; ++j) {
@@ -141,6 +154,9 @@ public class Main {
 				
 			}
 			
+			//001
+			//011
+			//111
 			if((row_pos.y + row_max -1) == col_pos.y && row_pos.x == (col_pos.x + col_max -1)) {
 				for(int i =0; i<col_max; ++i) {
 					for(int j = row_max -i -1; j<row_max; ++j) {
@@ -157,10 +173,14 @@ public class Main {
 				return answer;
 			}
 			
+			//가로 세로 길이가 다를때
 		}else{
 			
 			if(row_max %2 ==1 && row_max /2 +1 == col_max) {
 				
+				//11111
+				//01110
+				//00100
 				if((row_pos.y + row_max /2) == col_pos.y && row_pos.x == col_pos.x) {
 					for(int i=0 ; i<col_max; ++i) {
 						for(int j = -col_max +i +1; j< col_max -i; ++j) {
@@ -178,6 +198,9 @@ public class Main {
 					
 				}
 				
+				//00100
+				//01110
+				//11111
 				if((row_pos.y + row_max /2) ==col_pos.y && row_pos.x ==(col_pos.x + col_max -1)) {
 					for(int i =0 ; i< col_max; ++i) {
 						for(int j= -i; j<i+1; ++j) {
@@ -197,7 +220,11 @@ public class Main {
 			}
 			
 			if(col_max %2 ==1 && row_max == col_max/2 +1) {
-				
+				//10000
+				//11000
+				//11100
+				//11000
+				//10000
 				if((col_pos.x +col_max /2) == row_pos.x && col_pos.y == row_pos.y) {
 					for(int j =0; j<row_max; ++j) {
 						for(int i =-row_max +j +1; i<row_max -j; ++i) {
@@ -214,6 +241,11 @@ public class Main {
 					return answer;
 					
 				}
+				//00001
+				//00011
+				//00111
+				//00011
+				//00001
 				
 				if((col_pos.x + col_max/2) == row_pos.x && col_pos.y == (row_pos.y + row_max -1)) {
 					for(int j =0; j<row_max; ++j) {
