@@ -1,0 +1,34 @@
+#1 시험 감독 13458
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class test_watching {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Scanner sc = new Scanner(System.in);
+		int size = sc.nextInt();
+		ArrayList<Integer> contain = new ArrayList<Integer>(size);
+		for(int i =0 ; i<size; ++i) {
+			contain.add(sc.nextInt());
+		}
+		
+		int all = sc.nextInt();
+		int part = sc.nextInt();
+		//정수범위를 벗어날수 있음으로 
+		long answer =size;
+		sc.close();
+		
+		for(int i =0; i<contain.size(); ++i) {
+			
+			int b = contain.get(i)-all;
+			
+			if(b==0 || b<0) continue;
+			else if(b%part == 0) answer = answer + b / part;
+			else if(b%part != 0) answer = (answer + b / part)+1;
+		}
+		
+		System.out.print(answer);
+	}
+}
