@@ -1,4 +1,4 @@
-1.
+#1-1
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
         //1.n+1학생들로 표시 [lost는 -1,reserve는 1,나머지는 0]
@@ -36,8 +36,7 @@ class Solution {
         return answer;
     }  
 }
-
-2.
+#1-2
 import java.util.*;
 
 class Solution {
@@ -76,4 +75,35 @@ class Solution {
         }
         return answer;
     }
+}
+
+#2.
+class Solution{
+    public int solution(String name) {
+        int answer =0;
+        
+        char[] alpha = name.toCharArray();
+        int min =alpha.length-1;
+        for(int i =0 ;i<alpha.length; ++i){
+            int a = alpha[i];
+         //아스키코드를 활용 
+            if(a >=65 && a<=78){
+                answer += a-65;
+            }else if(a>78 && a<91){
+                answer += 91-a;
+            }
+            
+            int next = i+1;
+            while(next <alpha.length && alpha[next]=='A')
+                next++;
+            
+            // 원점으로 돌아가야 하기때문에 i+i를 해준뒤 전체길이에서 연속되는 A만큼 제외해준 길이를 탐색해준것과 전체 길이만큼 탐색한것 중에 짧은것 비교
+            min = Math.min(min,i+i+alpha.length-next);
+            
+        }
+        
+        
+        return answer+min;
+    }
+    
 }
