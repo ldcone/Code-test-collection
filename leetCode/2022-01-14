@@ -1,0 +1,150 @@
+#1 Roman to Integer(mycode)
+
+class Solution {
+    public int romanToInt(String s) {
+        int answer =0;
+        for(int i=0; i<s.length(); ++i){
+            if(s.charAt(i) == 'I'){
+                if( i != s.length()-1 && s.charAt(i+1) == 'X') {
+                    answer +=9;
+                    ++i;
+                    continue;
+                }
+                else if( i != s.length()-1 && s.charAt(i+1) == 'V') {
+                    answer +=4;
+                    ++i;
+                    continue;
+                }
+                
+            } else if(s.charAt(i) == 'X'){
+                if(i != s.length()-1 && s.charAt(i+1) == 'L' ){
+                    answer +=  40;
+                    ++i;
+                    continue;
+                }else if( i != s.length()-1 && s.charAt(i+1) == 'C'){
+                    answer += 90;
+                    ++i;
+                    continue;
+                }
+            } else if(s.charAt(i) == 'C'){
+                if(i != s.length()-1 && s.charAt(i+1) == 'D' ){
+                    answer +=  400;
+                    ++i;
+                    continue;
+                }else if( i != s.length()-1 && s.charAt(i+1) == 'M'){
+                    answer += 900;
+                    ++i;
+                    continue;
+                }
+            }
+            
+            answer += cases(s.charAt(i));
+        }
+            return answer;
+        
+    }
+    public int cases(char a){
+        switch(a) {
+            case 'I' : return 1;
+            case 'V' : return 5;
+            case 'X' : return 10;
+            case 'L' : return 50;
+            case 'C' : return 100;
+            case 'D' : return 500;
+            case 'M' : return 1000;
+        }
+        return 0;
+    }
+    
+}
+
+#2 Longest Common prefix
+import java.util.*;
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        Arrays.sort(strs,new Comparator<String>(){
+            @Override
+            public int compare(String s1,String s2){
+                return s1.length() - s2.length();
+            }
+        });
+        int count =0;
+        
+        for(int i=0; i<strs[0].length(); ++i){
+            for(int j =1; j<strs.length; ++j){
+                if(strs[0].substring(0,i+1).equals(strs[j].substring(0,i+1))){
+                    continue;    
+                }else if(!(strs[0].substring(0,i+1).equals(strs[j].substring(0,i+1))) && count == 0){
+                    return "";
+                }else if(!strs[0].substring(0,i+1).equals(strs[j].substring(0,i+1))){
+                    return strs[0].substring(0,i);
+                }
+            }
+            count++;
+        }
+        return strs[0];
+    }
+}
+#3  Valid Parentheses
+import java.util.Stack;
+class Solution {
+    
+    Stack<Integer> stack;
+    boolean answer =true;
+    public boolean isValid(String s) {
+        
+        
+        stack = new Stack<Integer>();
+        
+        
+        for(int i=0; i<s.length(); ++i){
+            cases(s.charAt(i));
+            if(!answer) return answer;
+            
+        }
+        if(!stack.empty()) return false;
+        
+       return answer;
+        
+        
+    }
+    
+    
+    public void cases(char a){
+        switch(a){
+            case '(': 
+               stack.push(40);
+                break;
+                
+            case ')': 
+                if(stack.empty()) answer = false;
+                else if(stack.peek() == 40) stack.pop();
+                else answer = false;
+                break;
+                
+            case '{': 
+                stack.push(41);
+                break;
+                
+            case '}': 
+                if(stack.empty()) answer = false;
+                else if(stack.peek() == 41) stack.pop();
+                else answer = false;
+                break;
+                
+            case '[': 
+                stack.push(42);
+                break;
+                
+            case ']': 
+                if(stack.empty()) answer = false;
+                else if(stack.peek() == 42) stack.pop();
+                else answer = false;
+                break;
+                
+            default: break;
+                
+        }
+    }
+    
+}
