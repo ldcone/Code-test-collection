@@ -47,3 +47,31 @@ class Solution {
     }
     
 }
+
+
+#2
+import java.util.Arrays;
+import java.util.Comparator;
+class Solution {
+//도착시간 기준으로 정렬
+    public int solution(int[][] routes) {
+        Arrays.sort(routes,(o1,o2)->{
+            return o1[1]-o2[1];
+        });
+        int answer =0;
+        
+        int end=routes[0][1];
+        int start =0;
+        for(int[]route :routes){
+            start = route[0];
+            //기준 도착시간보다 빠른 출발시간들은 안에 포함 
+            //역전시 기준시간 변경 
+            if(end<start) {
+                answer++;
+                end = route[1];
+            }
+        }
+        return answer+1;
+        
+    }
+}
