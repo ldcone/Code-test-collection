@@ -1,0 +1,23 @@
+#타겟 넘버
+class Solution {
+    public int answer;
+    int target2=0;
+    public int solution(int[] numbers, int target) {
+        target2 =target;
+        dfs(numbers,0,0);
+        return answer;
+    }
+    public void dfs(int[] numbers,int sum, int stage){
+        if(stage == numbers.length ){
+            if(sum == target2){
+                answer++;
+            }
+            return;
+        } 
+        
+        dfs(numbers,sum - numbers[stage],stage+1);
+        dfs(numbers,sum + numbers[stage],stage+1);
+
+    }
+   
+}
