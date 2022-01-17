@@ -1,0 +1,56 @@
+#1 Maximum Subarray
+//using kadane algorithm
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        int sum =0;
+        
+        for(int i=0; i<nums.length; ++i){
+            sum = sum +nums[i];
+            if(max<sum) max =sum;
+            if(sum <0) sum =0;
+            
+        }
+        
+        return max;
+    }
+}
+
+#2 58. Length of Last Word
+class Solution {
+    public int lengthOfLastWord(String s) {
+        int count =0;
+        
+        for(int i= s.length()-1 ; i>-1 ; --i){
+            if(s.charAt(i) != ' ') count++;
+            else if(s.charAt(i) == ' ' && count !=0) break;
+        }
+        return count;
+        
+    }
+}
+
+#3 66. Plus One
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int[] temp = new int[digits.length +1];
+        digits[digits.length-1] += 1; 
+        for(int i=digits.length-1; i>=0; --i){
+            int a= temp[i+1] + digits[i];
+            if( a >= 10){
+                temp[i+1] = a%10;
+                temp[i] = 1;
+            }else {
+                temp[i+1] = a;
+            }
+        }
+        
+        if(temp[0] != 0) return temp;
+        else {
+            for(int i=1;i< temp.length ;++i){
+                digits[i-1] = temp[i];
+            }
+            return digits;
+        }
+    }
+}
