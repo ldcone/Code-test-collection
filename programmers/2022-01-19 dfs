@@ -1,0 +1,84 @@
+#1.네트워크
+class Solution {
+    int answer;
+    boolean[] visited; 
+    public int solution(int n, int[][] computers) {
+        visited = new boolean[n];
+        answer =0;
+        
+        for(int i=0;i<n;++i){
+            if(visited[i] == false){
+                answer++;
+                dfs(i,computers);
+            }
+        }
+        return answer;
+    }
+    
+    public void dfs(int n,int[][] computers){
+        visited[n] = true;
+        for(int i =0; i<computers.length; ++i){
+            if(visited[i] == false && computers[n][i] ==1 ){
+                visited[i] = true;
+                dfs(i,computers);
+            }
+        }
+        
+    }
+    
+}
+
+#2.단어 변환
+class Solution {
+    boolean[] visited;
+    int answer;
+    String object;
+   
+    public int solution(String begin, String target, String[] words) {
+        answer = 0;
+        object = target;
+        
+        for(int i=0;i< words.length;++i){
+            if(words[i].equals(target)) answer += 1;
+        }
+        if(answer ==0) return 0;
+        answer =51;
+        visited = new boolean[words.length];
+        
+        dfs(visited,begin,words,0);
+        
+        
+        return answer;
+    }
+    public void dfs(boolean[] visited,String begin, String[] words,int stage){
+        if(begin.equals(object)){
+            if(stage<answer){
+                answer = stage;
+                return;
+            }
+        }
+        stage += 1;
+        for(int i=0;i<words.length; ++i){
+            int count =0;
+            if(visited[i] == true) continue;
+            
+            for(int j=0; j<words[i].length();++j){
+                if(begin.charAt(j) != words[i].charAt(j)){
+                    
+                    if(count>0){
+                        count = 2;
+                        break;
+                    }
+                        
+                    count += 1;
+                }
+            }
+             if(count == 1){
+                visited[i] = true;
+                dfs(visited,words[i],words,stage);
+                visited[i] = false;
+            }
+        }
+        return;
+    }
+}
