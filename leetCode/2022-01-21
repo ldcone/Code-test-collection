@@ -1,0 +1,64 @@
+#1. Rotate Array
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int size = nums.length;
+        int[] temp = new int[nums.length];
+        k = k%size;
+        if(k ==0) return; 
+        //#1 solution
+        for(int i=0;i<size;++i){
+            if(i+k>=size){
+                temp[-size+i+k] = nums[i];
+                continue;
+            }
+            temp[i+k] = nums[i];
+        }
+        
+        for(int i=0;i<size;++i){
+             nums[i] = temp[i];
+        }
+       
+    }
+}
+
+#2 Squares of a Sorted Array
+import java.util.*;
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        // for(int i=0; i<nums.length; ++i){
+        //     nums[i] = nums[i]*nums[i];
+        // }
+        // Arrays.sort(nums);
+        // return nums;
+        int size = nums.length;
+        
+        int[] res = new int[size];
+        int start =0;
+        int end =nums.length-1;
+        for(int i =size-1; i>=0; --i){
+            if(Math.abs(nums[start]) < Math.abs(nums[end])){
+                res[i]=nums[end] * nums[end];
+                end--;
+            }else if(Math.abs(nums[start]) >= Math.abs(nums[end])){
+                res[i] = nums[start] * nums[start];
+                start++;
+            }
+        }
+        return res;
+    }
+}
+#3 . Min Cost Climbing Stairs
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        int n = cost.length; 
+        int[] dp = new int[n+1];
+        dp[0] =0;
+        dp[1] =0;
+        
+        for(int i=2; i<n+1; ++i){
+            dp[i] = Math.min(dp[i-2] + cost[i-2], dp[i-1] + cost[i-1]);
+        }
+        return dp[n];
+        
+    }
+}
