@@ -1,0 +1,40 @@
+# Reverse String
+class Solution {
+    public void reverseString(char[] s) {
+        // int start =0;
+        // int end = s.length;
+        // char temp ='2';
+        // while(start < s.length-1-start){
+        //     temp = s[start];
+        //     s[start] = s[s.length-1-start];
+        //     s[s.length-1-start] = temp;
+        //     start++; 
+        // }
+        
+        for (int i = 0, j = s.length -1; i < j; i++, j--) {
+		char tmp = s[i];
+		s[i] = s[j];
+		s[j] = tmp;
+	}
+    }
+    
+}
+
+#Reverse Words in a String III
+class Solution {
+    public String reverseWords(String s) {
+        String[] a= s.split(" ");
+        StringBuilder sb = new StringBuilder();
+        StringBuffer sbb;
+        int count =0;
+        for(String b:a){
+            count++;
+            sbb = new StringBuffer(b);
+            sb.append(sbb.reverse().toString());
+            if(count == a.length) continue;
+            sb.append(" ");
+        }
+        
+        return sb.toString();
+    }
+}
