@@ -1,0 +1,120 @@
+#876. Middle of the Linked List
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode find = head;
+        int count =1;
+        while(find.next != null){
+            find = find.next;
+            count++;
+        }
+        int start = count/2;
+        int count2 =0;
+        find = head;
+        while(count2 != start){
+            find = find.next;
+            count2++;
+        }
+        
+        return find;
+    }
+}
+
+#19. Remove Nth Node From End of List
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode find = head;
+        int node_num =1;
+        while(find.next!=null){
+            find = find.next;
+            node_num++;
+        }
+        find = head;
+        if(node_num ==1 && n==1) return null;
+        else if(node_num -n == 0) return head.next;
+        int count =0;
+        
+        while(count != node_num - n-1){
+            find = find.next;
+            count++;
+        }
+        find.next = find.next.next;
+        return head;
+        
+//         while(true){
+//             if(count != node_num - n){
+//                 find = find.next;
+//             }
+//             count++;
+            
+//         }
+    }
+}
+
+# 3. Longest Substring Without Repeating Characters
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+    //time over answer
+//         if(s.length() == 1) return 1;
+//         String answer2 ="";
+//         int answer =0;
+//         int count =1;
+//         String[] answer_array = s.split("");
+       
+//         for(int i=0; i<answer_array.length; ++i){
+//             StringBuilder sb = new StringBuilder();
+//             for(int j =i; j<answer_array.length;++j){
+//                 answer2 = sb.toString();
+//                 if(answer2.contains(answer_array[j])){
+//                     int max = answer2.length();
+//                     if(answer < max){
+//                         answer = max;
+//                     }
+//                 sb = new StringBuilder();
+//                 }
+//             sb.append(answer_array[j]);
+            
+//             }
+//             int max = sb.toString().length();
+//             if(answer < max){
+//                 answer = max;
+//             }
+//         }
+        //right answer
+        if(s.length() == 0) return 0;
+        String[] compare = s.split("");
+        Set<String> n = new HashSet<>();
+        int i=0;
+        int j=0;
+        int max=0;
+        while(j<compare.length){
+            if(!n.contains(compare[j])){
+                n.add(compare[j++]);
+                if(max<n.size()) max = n.size();
+            }else {
+                n.remove(compare[i++]);
+            }
+        }
+        
+        return max;
+    }
+}
