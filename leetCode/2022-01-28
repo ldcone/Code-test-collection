@@ -1,0 +1,126 @@
+# 733. Flood Fill
+class Solution {
+    int[] dx = {1,-1,0,0};
+    int[] dy = {0,0,1,-1};
+    boolean[][] visited;
+    int start;
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        
+        visited = new boolean[image.length][image[0].length];
+        start = image[sr][sc];
+        
+        dfs(sr,sc,image,newColor);
+        
+        return image;
+        
+    }
+    
+    public void dfs(int sr, int sc,int[][] image,int newcolor){
+        visited[sr][sc]=true;
+        image[sr][sc] = newcolor;
+        for(int i=0; i<4; ++i){
+            int x = sr + dx[i];
+            int y = sc + dy[i];
+            
+            if(x >= image.length || x<0 || y >= image[0].length || y<0) continue;
+            else if(visited[x][y]) continue;
+            
+            if(image[x][y] == start){
+                dfs(x,y,image,newcolor);
+            }
+        }
+       
+        
+    }
+}
+# 695. Max Area of Island
+class Solution {
+    int answer;
+    int[] dx = {1,-1,0,0};
+    int[] dy = {0,0,1,-1};
+    boolean[][] visited;
+    int count =0;
+    public int maxAreaOfIsland(int[][] grid) {
+        answer =0;
+        visited = new boolean[grid.length][grid[0].length];
+        for(int i =0; i<grid.length; ++i){
+            for(int j=0; j<grid[i].length; ++j){
+                
+                if(visited[i][j]) continue;
+                else if(grid[i][j] == 1){
+                    dfs(grid,i,j);
+                    if(count>answer) answer =count;
+                    count =0;
+                } 
+            }
+        }
+        return answer;
+        
+    }
+    public void dfs(int[][] grid, int sr, int sc ){
+        if(sr>=grid.length || sr<0 || sc >= grid[0].length || sc<0 || grid[sr][sc] != 1 || visited[sr][sc]) return; 
+        count++;
+        visited[sr][sc] = true;
+        
+        dfs(grid,sr+1,sc);
+        dfs(grid,sr,sc+1);
+        dfs(grid,sr-1,sc);
+        dfs(grid,sr,sc-1);
+        //위의 방식이 시간이 더 빠름
+        // for(int i=0; i<4;++i){
+        //     int x = dx[i] + sr;
+        //     int y = dy[i] + sc;
+        //     if(x>=grid.length || x<0 || y >= grid[0].length || y<0) continue;
+        //     if(grid[x][y] == 1 && !visited[x][y]){
+        //         dfs(grid,x,y);
+        //     }
+        // }
+    }
+}
+# 617. Merge Two Binary Trees
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
+        if(root1 == null) return root2;
+        if(root2 == null) return root1;
+        TreeNode answer = new TreeNode(root1.val + root2.val);
+        answer.left = mergeTrees(root1.left,root2.left);
+        answer.right = mergeTrees(root1.right,root2.right);
+        return answer;
+        
+            
+        }
+    }
+    
+# 116. Populating Next Right Pointers in Each Node
+class Solution {
+    public Node connect(Node root) {
+        Node curr = root;
+        while(curr!=null && curr.left!=null) {
+            
+            curr.left.next = curr.right;
+            if(curr.next!=null) {
+                curr.right.next = curr.next.left;
+            }
+            
+            curr = curr.next;
+        }
+        if(root!=null && root.left!=null  ) connect(root.left);
+        return root;
+    }
+}
+    
