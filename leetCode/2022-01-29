@@ -1,0 +1,34 @@
+#542. 01 Matrix
+//bfs
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        
+        Queue<int[]> queue = new LinkedList<int[]>();
+        
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        
+        for(int i=0; i<mat.length; ++i){
+            for(int j=0; j<mat[0].length; ++j){
+                if(mat[i][j] == 0) queue.add(new int[] {i,j});
+                else mat[i][j] = -1;
+            }
+        }
+        
+        while(!queue.isEmpty()){
+            int[] curr = queue.poll();
+            for(int[] di :dir){
+                int dx = curr[0] + di[0];
+                int dy = curr[1] + di[1];
+                
+                if(dx>=0 && dx<mat.length && dy>=0 && dy<mat[0].length && mat[dx][dy] == -1){
+                    
+                    queue.add(new int[]{dx,dy});
+                    mat[dx][dy] = mat[curr[0]][curr[1]] + 1;
+                    
+                }
+            }
+        }
+        return mat;
+        
+    }
+}
