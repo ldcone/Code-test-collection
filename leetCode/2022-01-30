@@ -1,0 +1,121 @@
+#994. Rotting Oranges
+class Solution {
+    
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<int[]>();
+        for(int i=0;i<grid.length;++i){
+            for(int j=0; j<grid[0].length; ++j){
+                if(grid[i][j] == 2){
+                    queue.add(new int[] {i,j,0});
+                }
+            }
+        }
+        int stage =0;
+        int[][] dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        
+        while(!queue.isEmpty()){
+            int[] curr = queue.poll();
+            if(curr[2] !=stage) stage = curr[2];
+            
+            for(int[] a :dir){
+                int dx = curr[0] +a[0];
+                int dy = curr[1] +a[1];
+                if(dx>=0 && dx<grid.length && dy>=0 && dy<grid[0].length && grid[dx][dy] == 1){
+                    queue.add(new int[] {dx,dy,stage+1});
+                    grid[dx][dy] =2;
+                }
+            }
+        }
+        
+         for(int i=0;i<grid.length;++i){
+            for(int j=0; j<grid[0].length; ++j){
+                if(grid[i][j] == 1){
+                    return -1;
+                }
+            }
+        }
+        return stage;
+        
+    }
+    
+}
+#206. Reverse Linked List
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    
+    public ListNode reverseList(ListNode head) {
+        if(head== null || head.next == null){
+            return head;
+        }
+        ListNode curr = head;
+        ListNode next = null;
+        ListNode prev = null;
+        
+        while(curr != null){
+            next = curr.next;
+            curr.next =prev;
+            prev = curr;
+            curr = next;
+            // System.out.println(prev.val +" "+ curr.val);
+            
+        }
+        return prev;
+    }
+
+    
+}
+
+#77. Combinations
+class Solution {
+     List<List<Integer>> answer;
+    public List<List<Integer>> combine(int n, int k) {
+       
+        answer = new ArrayList<>();
+        
+        for(int i=1; i<=n; ++i){
+           List<Integer> temp = new ArrayList<>();
+            temp.add(i);
+            recursion(i,n,k,1,temp);
+        }
+        
+        return answer;
+    
+    }
+    
+    public void recursion(int i, int n, int k, int stage, List<Integer> temp){
+        
+        if(stage == k ){
+            List<Integer> temp1 = new ArrayList<>();
+            for(int a : temp){
+                temp1.add(a);
+            }
+            answer.add(temp1);
+            return;
+        }
+        int j= i+1;
+        while(j!=n+1){
+            temp.add(j);
+            recursion(j,n,k,stage+1,temp);
+            temp.remove(temp.size()-1);
+            j++;
+        }
+        
+        
+        
+        
+        
+    }
+    
+ }
+
+
+
