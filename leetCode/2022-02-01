@@ -1,0 +1,52 @@
+#121. Best Time to Buy and Sell Stock
+class Solution {
+    public int maxProfit(int[] prices) {
+//         int min = Intger.MAX_VALUE;
+//         int index_min = 0;
+        
+//         int max = prices[prices.length-1];
+//         for(int i=0; i<prices.length-2; ++i){
+//             if(min>prices[i]){
+//                 min=prices[i];
+//                 index_min =i;
+//             }
+//         }
+        // int answer =0;
+        
+//        for(int i=0; i<prices.length-1;++i){
+//            int max =0;
+//            for(int j=i+1;j<prices.length;++j){
+//                if(prices[i] < prices[j]){
+//                    if(prices[j]>=max){
+//                        max = prices[j];
+//                        if(answer<max-prices[i]){
+//                            answer = max-prices[i];
+//                        }
+//                    }
+//                }
+               
+//            }
+//        }
+        int index =prices.length-1;
+        int max =prices[prices.length-1];
+        int answer =0;
+       
+        while(index!=0){
+            if(prices[index]>max|| index == prices.length-1){
+                max = prices[index];
+                int min = Integer.MAX_VALUE;
+                for(int i = index -1; i>=0; --i){
+                    if(min>prices[i]){
+                        min =prices[i];
+                    }
+                }
+                if(answer<max-min){
+                    answer = max-min;
+                }
+            }
+            index--;
+            
+        }
+        return answer;
+    }
+}
