@@ -1,0 +1,198 @@
+#23. Merge k Sorted Lists
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode node = new ListNode(-1);
+        PriorityQueue<ListNode> heap = new PriorityQueue<>((o1,o2)->o1.val - o2.val);
+        for(ListNode node1:lists){
+            if(node1 != null){
+                heap.add(node1);
+            }
+        }
+        
+        ListNode temp = node;
+        
+        while(!heap.isEmpty()){
+            temp.next = heap.poll();
+            temp = temp.next;
+            if(temp.next != null){
+                heap.add(temp.next);
+            }
+        }
+        
+        return node.next;
+    }
+}
+
+#438. Find All Anagrams in a String
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        int[] arr = new int[26];
+        Arrays.fill(arr,-1);
+        for(int i=0; i<p.length(); ++i){
+            if(arr[p.charAt(i)-97] == -1) arr[p.charAt(i)-97] =1;
+            else arr[p.charAt(i)-97]++;
+        }
+        List<Integer> answer = new ArrayList<>();
+        int size = p.length();
+        int start = 0;
+        int count = 0;
+        for(int i=0; i<s.length(); ++i){
+            arr[s.charAt(i)-97]--;
+            
+            if(arr[s.charAt(i)-97] >=0){
+                count++;
+            }
+            
+            if(i-start == size-1){
+                
+                if(count == size){
+                    answer.add(start);
+                }
+                if(arr[s.charAt(start)-97] >=0){
+                    count--;
+                    arr[s.charAt(start)-97]++;
+                    
+                }else  arr[s.charAt(start)-97]++;
+               start++;
+            }
+        }
+        return answer;
+        
+    }
+}
+
+#525. Contiguous Array
+//시간초과
+// class Solution {
+//     public int findMaxLength(int[] nums) {
+//         int start = 0;
+//         int zero_count = 0;
+//         int one_count = 0;
+//         int i = 0;
+//         int answer =0;
+//         System.out.println(nums.length);
+        
+//         while(start != nums.length){
+//             if(i != nums.length){
+//                 if(nums[i] == 0) zero_count++;
+//                 else one_count++;
+//                 if(zero_count == one_count){
+//                     System.out.println("i:"+answer);
+//                     if(answer<i-start+1){
+//                         answer = i-start+1;
+                        
+//                     }
+//                 }
+//                 ++i;
+//             } 
+//             else {
+//                 if(zero_count == one_count){
+//                     System.out.println("start:"+answer);
+//                     if(answer<=i-start+1){
+//                         answer =i-start;
+                        
+//                         return answer;
+//                     }
+//                 }
+//                 if(nums[start] == 0) zero_count--;
+//                 else one_count--;
+                
+//                 start++;
+//             }
+//         }
+//         return answer;
+//     }
+// }
+
+
+class Solution {
+	public int findMaxLength(int[] nums) {
+		HashMap<Integer, Integer> counts = new HashMap();
+		counts.put(0,-1);
+
+		int max_length = 0;
+		int count = 0;
+
+		for(int i = 0; i < nums.length; i++) {
+			if(nums[i] == 0) {
+				count += -1;
+			} else {
+				count += 1;
+			}
+
+			if(counts.containsKey(count)) {
+				max_length = Math.max(max_length, i-counts.get(count));
+			} else {
+				counts.put(count, i);
+			}
+		}
+		return max_length;
+	}
+}
+#454. 4Sum II
+//dfs적용시 시간초과
+
+// class Solution {
+//     int answer=0;
+//     List<int[]> total;
+//     public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+//         total = new ArrayList<>();
+//         total.add(nums1);
+//         total.add(nums2);
+//         total.add(nums3);
+//         total.add(nums4);
+//         dfs(total,0,0);
+//         return answer;
+//     }
+//     public void dfs(List<int[]> nums, int sum, int count){
+//         if(count ==4){
+//             if(sum == 0){
+//                 answer++;
+//             }
+//             return;
+//         }
+//         int[] nums1 = nums.get(count);
+//         for(int i =0; i<nums1.length; ++i){
+//             sum += nums1[i];
+//             dfs(nums,sum,count+1);
+//             sum = sum - nums1[i];
+//         }
+        
+//     }
+// }
+
+
+class Solution {
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        
+        for(int a :nums1){
+            for(int b:nums2){
+                map.put(a+b,map.getOrDefault(a+b,0)+1);
+            }
+        }
+        int answer=0;
+        
+        for(int a:nums3){
+            for(int b:nums4){
+                if(map.getOrDefault(-(a+b),0) >= 1){
+                    answer += map.get(-(a+b));
+                }
+            }
+        }
+        
+        
+        return answer;
+    }
+
+}
