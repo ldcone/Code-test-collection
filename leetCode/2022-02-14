@@ -1,0 +1,101 @@
+#104. Maximum Depth of Binary Tree
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int max =1;
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+        
+        if(root.right != null){
+            depth(root.right,1);
+        }
+        if(root.left != null){
+            depth(root.left,1);
+        }
+        return max;
+    }
+    void depth(TreeNode root, int count){
+        count++;
+        if(root.right != null){
+            depth(root.right,count);
+        }
+        max =Math.max(count,max);
+        if(root.left != null){
+            depth(root.left,count);
+        }
+         max =Math.max(count,max);
+        }
+}
+#77. Combinations
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> array = new ArrayList<>();
+        
+        dfs(array,1,k,new ArrayList<>(),n,0);
+        return array;
+    }
+    
+    void dfs(List<List<Integer>> array, int count, int k,List<Integer> temp,int n, int index){
+        if(count == k+1){
+            List<Integer> temp1 = new ArrayList<>();
+            for(int a:temp){
+                temp1.add(a);
+            }
+            array.add(temp1);
+            return;
+        }
+        
+        for(int i=index+1; i<n+1;++i){
+            temp.add(i);
+            dfs(array ,count+1 ,k ,temp , n , i);
+            temp.remove(count-1);
+        }
+        
+    }
+}
+#46. Permutations
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> answer = new ArrayList<>();
+        if(nums.length == 0) return answer;
+        else if(nums.length == 1) {
+            List<Integer> temp = new ArrayList<>();
+            temp.add(nums[0]);
+            answer.add(temp);
+            return answer;
+        }
+        recursion(0,nums,new ArrayList<>(), answer);
+        return answer;
+    }
+    public void recursion(int count, int[] nums,List<Integer> temp, List<List<Integer>> answer){
+        
+        if(count == nums.length){
+            List<Integer> temp1 = new ArrayList<>();
+            for(int a : temp){
+                temp1.add(a);
+            }
+            answer.add(temp1);
+            return;
+        }
+        
+        for(int i : nums){
+            if(temp.contains(i)) continue;
+            temp.add(i);
+            recursion(count+1, nums, temp,answer);
+            temp.remove(count);
+        }
+    }
+}
