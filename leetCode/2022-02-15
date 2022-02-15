@@ -1,29 +1,65 @@
-#
+#784. Letter Case Permutation
 class Solution {
-    public List<String> letterCasePermutation(String S) {
-        if (S == null) {
-            return new LinkedList<>();
+    public List<String> letterCasePermutation(String str) {
+        List<String> permutations = new ArrayList<>();
+        if (str == null) {
+            return permutations;
         }
         
-        List<String> res = new LinkedList<>();
-        helper(S.toCharArray(), res, 0);
-        return res;
-    }
-    
-    public void helper(char[] chs, List<String> res, int pos) {
-        if (pos == chs.length) {
-            res.add(new String(chs));
-            return;
-        }
-        if (chs[pos] >= '0' && chs[pos] <= '9') {
-            helper(chs, res, pos + 1);
-            return;
+        permutations.add(str);
+        
+        for (int i=0; i<str.length(); i++) {
+            if (Character.isLetter(str.charAt(i))) {
+                int n = permutations.size();
+                
+                for (int j=0; j<n; j++) {
+                    char[] chs = permutations.get(j).toCharArray();
+                    if (Character.isUpperCase(chs[i])) {
+                        chs[i] = Character.toLowerCase(chs[i]);
+                    } else {
+                        chs[i] = Character.toUpperCase(chs[i]);
+                    }
+                    
+                    permutations.add(String.valueOf(chs));
+                }
+            }
         }
         
-        chs[pos] = Character.toLowerCase(chs[pos]);
-        helper(chs, res, pos + 1);
-        
-        chs[pos] = Character.toUpperCase(chs[pos]);
-        helper(chs, res, pos + 1);
+        return permutations;
     }
 }
+# 136. Single Number
+class Solution {
+    public int singleNumber(int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        HashMap<Integer,Boolean> map = new HashMap<>();
+        
+        boolean[] visited = new boolean[nums.length];
+        for(int i=0; i<nums.length; ++i){
+            if(set.add(nums[i])){
+                map.put(nums[i],true);
+            }else{
+                map.remove(nums[i]);
+            }
+        }
+        
+        for(int i=0; i< nums.length; ++i){
+            if(map.get(nums[i]) != null) return nums[i];
+        }
+        return 0;
+    }
+}
+
+// class Solution {
+//     public int singleNumber(int[] nums) {
+//         int nums_length=nums.length;
+//         int ans=0;
+//         for(int i=0;i<nums_length;i++)
+//         {
+            
+//             ans^=nums[i];
+//             System.out.println(ans);
+//         }
+//         return ans;
+//     }
+// }
