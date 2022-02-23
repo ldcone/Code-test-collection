@@ -2,8 +2,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
-public class baekjoon_2669 {
+//구현 방식 참고해서 품
+public class KOI_1996_2669 {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
