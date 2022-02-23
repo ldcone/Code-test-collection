@@ -1,82 +1,76 @@
+package baeck_olympiad;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
-
-public class restart_2667 {
-	static int[][] Map;
-	static boolean[][] check;
-	static int N;
-	static int count;
-	
-	
-	static class position {
-		int x;
-		int y;
-		public position(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-	}
-	
+import java.util.Scanner;
+import java.util.StringTokenizer;
+//java 
+//dfs자체사용에 대해서는 고려했지만 구현에 있어서 visit을 고려하지않아 이분을 참고해서 품
+public class KOI_1996_2667 {
+	static int[][] map;
+	static boolean [][] visit;
 	static int[] dx = {1,-1,0,0};
 	static int[] dy = {0,0,1,-1};
+	static int size;
+	static ArrayList<Integer> answer;
+	static int count =1;
 	
-	public static void main(String[] args) throws NumberFormatException, IOException {
+
+	public static void main(String[] args)throws IOException {
 		// TODO Auto-generated method stub
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		N = Integer.parseInt(br.readLine());
-		Map = new int[N][N];
-		check = new boolean[N][N];
-		ArrayList<Integer> result = new ArrayList<Integer>();
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		size = Integer.parseInt(bf.readLine());
 		
+		map = new int[size+1][size+1];
+		visit = new boolean[size+1][size+1];
+		answer = new ArrayList<>();
 		
-		for(int i =0; i< N; ++i) {
-			String input = br.readLine();
-			for(int j=0; j<N; ++j) {
-				Map[i][j] = input.charAt(j)-'0';
-				if(Map[i][j] == 0) {
-					check[i][j] = true;
-				}
+		for(int i=1; i<size+1; ++i) {
+			String b = bf.readLine();
+			for(int j=1; j<size+1; ++j) {
+				map[i][j] =b.charAt(j-1)-'0';
 			}
 		}
 		
-		for(int i =0; i<N; ++i) {
-			for(int j =0; j<N; ++j) {
-				if(check[i][j] == true) {
-					continue;
+		for(int i=1; i< size+1; ++i) {
+			for(int j=1; j< size+1; ++j) {
+				if(visit[i][j]) continue;
+				else if(map[i][j] == 1) {
+					visit[i][j] = true;
+					dfs(i,j);
+					answer.add(count);
+					count=1;
 				}
-				count =0;
-				bfs(i,j);
-				result.add(count);
-			}
-		}
-		Collections.sort(result);
-		System.out.println(result.size());
-		for(int c :result) System.out.println(c);
-	}
-	
-	 static public void bfs(int x, int y) {
-		 check[x][y] = true;
-		 count++;
-		 Queue<position> queue = new LinkedList<>();
-		 queue.add(new position(x,y));
-		 while(!queue.isEmpty()) {
-			position point =  queue.poll();
-			for(int i =0; i<4; ++i) {
-				int cx = point.x + dx[i];
-				int cy = point.y + dy[i];
-				if(cx<0 || cy<0 || cx>=N || cy>=N) {
-					continue;
-				}
-				if(check[cx][cy] == false) bfs(cx,cy);
 				
 			}
-		 }
+			
+		}
+		Collections.sort(answer);
+		System.out.println(answer.size());
+		for(int i =0; i<answer.size(); ++i) {
+			System.out.println(answer.get(i));
+		}
+		
+		
 	}
-}
+	
+	static void dfs(int x, int y) {
+		for(int i=0;i<4;++i) {
+			int cx = dx[i] + x;
+			int cy = dy[i] + y;
+			if(cx<1 || cx>=size+1 || cy<1 || cy>=size+1 ) {
+				continue;
+			}
+			if(map[cx][cy] == 1 && visit[cx][cy] == false) {
+				visit[cx][cy] = true;
+				count++;
+				dfs(cx,cy);
+			}
+			
+		}
+	}
 
-//java used
+}
