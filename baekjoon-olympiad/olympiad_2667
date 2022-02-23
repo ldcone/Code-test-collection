@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 //java 
-//dfs자체사용에 대해서는 고려했지만 구현에 있어서 visit을 고려하지않아 이분을 참고해서 품
+//스스로 해결
 public class KOI_1996_2667 {
 	static int[][] map;
 	static boolean [][] visit;
